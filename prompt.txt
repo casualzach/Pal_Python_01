@@ -1,0 +1,10 @@
+write a concise character analysis of the two persons having a text conversation, focusing on the big 5 personality traits.
+
+OUTPUT EXAMPLE: 
+[NAME PERSON 1]: [CHARACTER ANALYSIS] 
+[NAME PERSON 2]: [CHARACTER ANALYSIS] 
+
+CHAT:
+<<Chat>>
+
+OUTPUT:
