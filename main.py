@@ -13,7 +13,7 @@ import math
 # define filepath to source chat
 chatpath = '../Chat_Example/_chat.txt'
 #how may characters per chunk
-chunksize = 4000 
+chunksize = 8000 
 
 load_dotenv()
 
@@ -117,30 +117,32 @@ if __name__ == '__main__':
     line_end = 0
     
     #create chunks by line ensuring we pass a max of {chunksize} characters (+ line overhang)
-    # while line_end < line_count:
-    #     chars = 0
-    #     while chars < chunksize and line_end < line_count:
-    #         chars = chars + len(lines[line_end])
-    #         line_end+=1
+    while line_end < line_count:
+        chars = 0
+        while chars < chunksize and line_end < line_count:
+            chars = chars + len(lines[line_end])
+            line_end+=1
 
-    #     #print('start: ', line_start,' end: ', line_end)
+        #print('start: ', line_start,' end: ', line_end)
 
-    #     chunk = " "
-    #     chunk = chunk.join(lines[line_start:line_end])
+        chunk = " "
+        chunk = chunk.join(lines[line_start:line_end])
 
-    #     line_start = line_end + 1
+        line_start = line_end + 1
 
-    #     perc = math.trunc(line_end/line_count*100)
-    #     print(f'Processed {perc}% of chat')
-    #     prompt = open_file('prompt.txt').replace('<<Chat>>', chunk)
-    #     summary = gpt3_completion(prompt)
-    #     result.append(summary)
+        perc = math.trunc(line_end/line_count*100)
+        print(f'Processed {perc}% of chat')
+        prompt = open_file('prompt.txt').replace('<<Chat>>', chunk)
+        summary = gpt3_completion(prompt)
+        result.append(summary)
+    outputname = './output/output_%s.txt' % time()
+    save_file('\n'.join(result), outputname)
     # save_file('\n'.join(result), './output/output_%s.txt' % time())
 
     # output = " "
     # output = output.join(result)
 
-    w = open('./output/output_1673279985.331197.txt', 'r')
+    w = open(outputname, 'r')
     lines = w.readlines()
     line_count = len(lines)
     w.seek(0)
@@ -176,7 +178,7 @@ if __name__ == '__main__':
             perc = math.trunc(line_end/line_count*100)
             print(f'Processed {perc}% of summary')
 
-            prompt = open_file('sumprompt.txt').replace('<<Summary>>', chunk)
+            prompt = open_file('prompt_summary.txt').replace('<<Summary>>', chunk)
             summary = gpt3_completion(prompt)
             #summary = prompt
             result.append(summary)
@@ -187,9 +189,15 @@ if __name__ == '__main__':
         summaryfile = w.read()
         summarylength = len(summaryfile)
 
-    prompt = open_file('sumprompt.txt').replace('<<Summary>>', summaryfile)
-    finalsummary = gpt3_completion()
-    save_file('\n'.join(finalsummary), './output/finalsummary.txt')
+    w = open('./output/summary.txt')
+    w.seek(0)
+    summaryfile = w.read()
+    prompt = open_file('prompt_final.txt').replace('<<Summary>>', summaryfile)
+    #print(prompt)
+    finalsummary = gpt3_completion(prompt)
+    save_file(finalsummary, './output/finalsummary.txt')
+    print('Analysis complete:')
+    print(finalsummary)
 
 
 

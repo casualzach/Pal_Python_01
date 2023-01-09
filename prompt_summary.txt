@@ -1,0 +1,10 @@
+The following are summaries of two persons character analysis from a text conversation. Write a topical summary of each individual retaining the big 5 personality traits.
+
+OUTPUT EXAMPLE: 
+[NAME PERSON 1]: [CHARACTER ANALYSIS] 
+[NAME PERSON 2]: [CHARACTER ANALYSIS] 
+
+SUMMARIES:
+<<Summary>>
+
+OUTPUT:
